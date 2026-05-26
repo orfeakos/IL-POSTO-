@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IL POSTO</title>
+<link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=DM+Sans:wght@200;300;400&family=Space+Mono:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:#080503;font-family:'DM Sans',sans-serif;color:#f0ddb8;}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:22px 32px;display:flex;align-items:center;justify-content:space-between;transition:background .4s,border .4s;}
+nav.scrolled{background:rgba(5,3,1,.96);border-bottom:1px solid rgba(200,150,58,.1);}
+.nav-logo{width:52px;filter:invert(1) brightness(10);opacity:.18;transition:opacity .3s;mix-blend-mode:screen;}
+.nav-logo:hover{opacity:.5;}
+.hamburger{cursor:pointer;display:flex;flex-direction:column;gap:5px;padding:6px;}
+.hamburger span{display:block;height:1px;background:#c8963a;transition:width .3s;}
+.hamburger span:nth-child(1){width:26px;} .hamburger span:nth-child(2){width:18px;} .hamburger span:nth-child(3){width:22px;}
+.hamburger:hover span{width:26px!important;}
+.drawer{position:fixed;top:0;right:-290px;bottom:0;width:270px;background:rgba(5,3,1,.98);border-left:1px solid rgba(200,150,58,.1);z-index:2000;padding:80px 44px;transition:right .42s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;gap:28px;}
+.drawer.open{right:0;}
+.drawer .cx{position:absolute;top:24px;right:24px;background:none;border:none;color:#5a4020;font-family:'Space Mono',monospace;font-size:10px;cursor:pointer;letter-spacing:.1em;}
+.drawer .db{font-family:'Tenor Sans',sans-serif;font-size:16px;letter-spacing:.3em;color:#c8963a;text-transform:uppercase;margin-bottom:4px;}
+.drawer a{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#786030;text-decoration:none;transition:color .2s;}
+.drawer a:hover{color:#c8963a;}
+
+/* ── HERO ── */
+#hero{height:100vh;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+#hero .bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=1600') center/cover;filter:saturate(1.1) brightness(.38);}
+#hero .vig{position:absolute;inset:0;background:radial-gradient(ellipse 72% 72% at 50% 50%,transparent 18%,rgba(6,3,1,.93) 100%),linear-gradient(to top,rgba(6,3,1,.75) 0%,transparent 55%);}
+#hero .bd{position:relative;z-index:2;text-align:center;animation:fadeUp .8s .2s ease both;}
+#hero .il{display:block;font-family:'Tenor Sans',sans-serif;font-size:clamp(28px,5.5vw,64px);letter-spacing:.55em;color:#fff;text-transform:uppercase;margin-bottom:2px;}
+#hero .po{display:block;font-family:'Tenor Sans',sans-serif;font-size:clamp(64px,13vw,148px);letter-spacing:.22em;color:#f0ddb8;text-transform:uppercase;line-height:1;}
+#hero .dv{width:32px;height:1px;background:rgba(200,150,58,.45);margin:14px auto 0;}
+#hero .tg{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(14px,1.8vw,18px);color:#907848;margin-top:16px;animation:fadeUp .7s .5s ease both;}
+#hero .sc{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;z-index:2;font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:#3a2810;}
+#hero .sc .bar{width:1px;height:32px;background:linear-gradient(to bottom,#c8963a,transparent);animation:pulse 2s infinite;}
+
+/* ── ABOUT ── */
+#about{display:grid;grid-template-columns:1fr 1fr;min-height:90vh;background:#080503;}
+#about .al{position:relative;overflow:hidden;}
+#about .al img.main{width:100%;height:100%;object-fit:cover;filter:saturate(1.2) brightness(.6);}
+#about .al .fade{position:absolute;inset:0;background:linear-gradient(to right,transparent 55%,#080503 100%);}
+#about .al .fc{position:absolute;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.75);border:3px solid #080503;}
+#about .al .fc img{width:100%;height:100%;object-fit:cover;display:block;}
+#about .al .fc1{width:140px;height:175px;bottom:90px;right:-18px;filter:saturate(1.2) brightness(.75);will-change:transform;transform:translateZ(0);}
+#about .al .fc2{width:100px;height:130px;top:70px;left:20px;filter:saturate(1.1) brightness(.7);will-change:transform;transform:translateZ(0);}
+#about .al .fc3{width:85px;height:105px;top:240px;right:55px;opacity:.7;will-change:transform;transform:translateZ(0);}
+/* Disable parallax on low-end / reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  #about .al .fc1, #about .al .fc2, #about .al .fc3 { will-change: auto; }
+}
+#about .ar{display:flex;flex-direction:column;justify-content:center;padding:80px 60px 80px 48px;}
+#about .ar .ey{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.35em;color:#c8963a;text-transform:uppercase;margin-bottom:28px;}
+#about .ar h2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(38px,4.5vw,58px);line-height:.95;color:#f0ddb8;margin-bottom:44px;}
+#about .ar h2 em{font-style:italic;color:#c8963a;}
+
+/* ── SCROLL REVEAL ── */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .75s ease, transform .75s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.reveal-left{opacity:0;transform:translateX(-24px);transition:opacity .8s ease, transform .8s ease;}
+.reveal-left.visible{opacity:1;transform:translateX(0);}
+/* stagger delays for timeline chapters */
+.ch:nth-child(1){transition-delay:.0s;}
+.ch:nth-child(2){transition-delay:.12s;}
+.ch:nth-child(3){transition-delay:.24s;}
+.ch:nth-child(4){transition-delay:.36s;}
+/* gallery image hover only — no fade-in */
+.gi{transition:filter .5s;}
+#about .tl{position:relative;}
+#about .tl::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,transparent,rgba(200,150,58,.3) 10%,rgba(200,150,58,.3) 90%,transparent);}
+#about .ch{padding:0 0 32px 34px;position:relative;}
+#about .ch::before{content:'';position:absolute;left:-4px;top:5px;width:8px;height:8px;border-radius:50%;background:#080503;border:1px solid #c8963a;}
+#about .ch .ct{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.28em;color:#c8963a;text-transform:uppercase;margin-bottom:5px;}
+#about .ch h3{font-family:'Tenor Sans',sans-serif;font-size:clamp(13px,1.6vw,16px);letter-spacing:.1em;color:#c0a070;text-transform:uppercase;margin-bottom:7px;}
+#about .ch p{font-family:'DM Sans',sans-serif;font-weight:300;font-size:13px;line-height:1.8;color:#5a4525;}
+@media(max-width:700px){#about{grid-template-columns:1fr;}#about .al{height:40vh;}#about .ar{padding:48px 24px;}}
+
+/* ── MENU ── */
+#menu{background:#060402;padding:100px 0 0;}
+
+/* category strip */
+.menu-cats{display:flex;gap:0;border-bottom:1px solid rgba(200,150,58,.12);padding:0 80px;overflow-x:auto;scrollbar-width:none;}
+.menu-cat-btn{flex-shrink:0;padding:0 0 20px;margin-right:40px;background:none;border:none;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .25s;}
+.menu-cat-btn .cat-img{width:56px;height:56px;border-radius:50%;object-fit:cover;filter:saturate(1.1) brightness(.6) grayscale(.4);margin-bottom:10px;transition:all .25s;}
+.menu-cat-btn .cat-label{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:#4a3820;transition:color .25s;}
+.menu-cat-btn.active .cat-img,.menu-cat-btn:hover .cat-img{filter:saturate(1.3) brightness(.8) grayscale(0);}
+.menu-cat-btn.active .cat-label,.menu-cat-btn:hover .cat-label{color:#c8963a;}
+.menu-cat-btn.active{border-bottom-color:#c8963a;}
+
+/* category panels */
+.menu-panel{display:none;padding:64px 80px 100px;}
+.menu-panel.active{display:grid;grid-template-columns:1fr 1fr;gap:0 60px;}
+
+/* featured item — spans full row */
+.menu-item{padding:18px 0;border-bottom:1px solid rgba(200,150,58,.07);display:flex;justify-content:space-between;align-items:flex-start;gap:16px;transition:background .2s;position:relative;}
+.menu-item:hover{background:rgba(200,150,58,.025);}
+.menu-item .mi-left{flex:1;}
+.menu-item .mi-name{font-family:'Cormorant Garamond',serif;font-size:18px;color:#c8b880;display:flex;align-items:center;gap:8px;}
+.menu-item .mi-name .star{font-size:9px;color:#c8963a;letter-spacing:.1em;border:1px solid rgba(200,150,58,.4);padding:2px 7px;font-family:'Space Mono',monospace;text-transform:uppercase;}
+.menu-item .mi-desc{font-family:'DM Sans',sans-serif;font-weight:300;font-size:12px;color:#4a3820;margin-top:4px;line-height:1.6;}
+.menu-item .mi-price{font-family:'Space Mono',monospace;font-size:13px;color:#c8963a;white-space:nowrap;padding-top:3px;}
+
+/* featured full-width card */
+.menu-featured{grid-column:1/-1;display:grid;grid-template-columns:200px 1fr;gap:0;background:rgba(200,150,58,.04);border:1px solid rgba(200,150,58,.1);margin-bottom:20px;}
+.menu-featured .mf-img{width:200px;height:160px;object-fit:cover;filter:saturate(1.2) brightness(.75);display:block;}
+.menu-featured .mf-body{padding:24px 28px;display:flex;flex-direction:column;justify-content:center;}
+.menu-featured .mf-tag{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.28em;color:#c8963a;text-transform:uppercase;margin-bottom:8px;}
+.menu-featured .mf-name{font-family:'Cormorant Garamond',serif;font-size:22px;color:#f0ddb8;margin-bottom:6px;}
+.menu-featured .mf-desc{font-family:'DM Sans',sans-serif;font-weight:300;font-size:13px;color:#6a5535;line-height:1.6;}
+.menu-featured .mf-price{font-family:'Space Mono',monospace;font-size:14px;color:#c8963a;margin-top:12px;}
+
+/* menu section header */
+.menu-head{padding:0 80px 48px;}
+.menu-head .ey{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.35em;color:#c8963a;text-transform:uppercase;margin-bottom:12px;}
+.menu-head h2{font-family:'Tenor Sans',sans-serif;font-size:clamp(36px,5vw,64px);letter-spacing:.12em;color:#f0ddb8;text-transform:uppercase;}
+
+@media(max-width:700px){.menu-cats{padding:0 24px;}.menu-panel{padding:48px 24px 72px;grid-template-columns:1fr;}.menu-head{padding:0 24px 40px;}.menu-featured{grid-template-columns:1fr;}.menu-featured .mf-img{width:100%;height:180px;}}
+
+/* ── GALLERY ── */
+#gallery{background:#070402;padding:80px 80px 0;}
+#gallery .gh{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px;}
+#gallery .gh .gl{} 
+#gallery .gh .gl .ey{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.35em;color:#c8963a;text-transform:uppercase;margin-bottom:12px;}
+#gallery .gh .gl h2{font-family:'Cormorant Garamond',serif;font-weight:300;font-style:italic;font-size:clamp(36px,5vw,60px);color:#f0ddb8;line-height:1;}
+/* mood text right side */
+#gallery .gh .gr{max-width:280px;text-align:right;}
+#gallery .gh .gr p{font-family:'DM Sans',sans-serif;font-weight:300;font-size:13px;line-height:1.8;color:#4a3820;}
+#gallery .gh .gr .loc{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.2em;color:#c8963a;text-transform:uppercase;margin-top:12px;}
+
+/* 6-cell asymmetric grid */
+#gallery .grid{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:300px 220px;gap:3px;}
+#gallery .gi{background-size:cover;background-position:center;filter:saturate(1.05) brightness(.65);transition:filter .5s;position:relative;overflow:hidden;}
+#gallery .gi:hover{filter:saturate(1.4) brightness(.85);}
+#gallery .gi.tall{grid-row:1/3;}
+/* subtle caption on hover */
+#gallery .gi .cap{position:absolute;bottom:0;left:0;right:0;padding:12px 16px;background:linear-gradient(to top,rgba(4,2,1,.8),transparent);font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.2em;color:rgba(200,150,58,.7);text-transform:uppercase;transform:translateY(100%);transition:transform .35s;}
+#gallery .gi:hover .cap{transform:translateY(0);}
+#gallery .g1{background-image:url('https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=900');}
+#gallery .g2{background-image:url('https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=600');}
+#gallery .g3{background-image:url('https://images.unsplash.com/photo-1608270586620-248524c67de9?w=600');}
+#gallery .g4{background-image:url('https://images.unsplash.com/photo-1565299715199-866c917206bb?w=600');}
+#gallery .g5{background-image:url('https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=600');}
+
+/* CTA row below grid */
+#gallery .gcta{padding:40px 0 80px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(200,150,58,.08);margin-top:3px;}
+#gallery .gcta p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(18px,2.5vw,24px);color:#6a5535;}
+#gallery .gcta a{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.22em;color:#c8963a;text-transform:uppercase;text-decoration:none;border-bottom:1px solid rgba(200,150,58,.35);padding-bottom:2px;transition:opacity .2s;}
+#gallery .gcta a:hover{opacity:.7;}
+
+@media(max-width:700px){#gallery{padding:60px 24px 0;}#gallery .gh{flex-direction:column;gap:20px;align-items:flex-start;}#gallery .gh .gr{text-align:left;}#gallery .grid{grid-template-columns:1fr 1fr;grid-template-rows:160px 160px 160px;}#gallery .gi.tall{grid-row:auto;}#gallery .gcta{flex-direction:column;gap:20px;align-items:flex-start;padding:32px 0 60px;}}
+
+/* ── FIND US ── */
+#find{display:grid;grid-template-columns:1fr 1fr;min-height:70vh;background:#060402;padding-bottom:0;}
+#find .ms{position:relative;overflow:hidden;}
+#find .ms .mp{width:100%;height:100%;min-height:400px;background:url('https://images.unsplash.com/photo-1524661135-423995f22d0b?w=900') center/cover;filter:saturate(.25) brightness(.4);}
+#find .ms .mo{position:absolute;inset:0;background:rgba(4,2,1,.3);}
+#find .ms .pin{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;}
+#find .ms .pin .dot{width:14px;height:14px;border-radius:50%;background:#c8963a;margin:0 auto 10px;box-shadow:0 0 0 6px rgba(200,150,58,.2);}
+#find .ms .pin span{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.2em;color:#c8963a;text-transform:uppercase;}
+#find .fi{display:flex;flex-direction:column;justify-content:center;padding:72px 60px;}
+#find .fi .ey{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.35em;color:#c8963a;text-transform:uppercase;margin-bottom:24px;}
+#find .fi h2{font-family:'Tenor Sans',sans-serif;font-size:clamp(28px,4vw,48px);letter-spacing:.1em;color:#f0ddb8;text-transform:uppercase;margin-bottom:40px;line-height:1.1;}
+#find .fi .detail{display:flex;gap:18px;align-items:flex-start;margin-bottom:20px;}
+#find .fi .detail .ic{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.2em;color:#c8963a;text-transform:uppercase;width:56px;flex-shrink:0;padding-top:2px;}
+#find .fi .detail .vl{font-family:'DM Sans',sans-serif;font-weight:300;font-size:14px;line-height:1.7;color:#786040;}
+#find .fi .socials{display:flex;gap:14px;margin-top:36px;}
+#find .fi .socials a{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.18em;color:#5a4020;text-transform:uppercase;text-decoration:none;transition:color .2s;}
+#find .fi .socials a:hover{color:#c8963a;}
+@media(max-width:700px){#find{grid-template-columns:1fr;}#find .ms .mp{min-height:260px;}#find .fi{padding:48px 24px;}}
+
+/* ── FOOTER ── */
+footer{background:#030201;padding:52px 80px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(200,150,58,.07);}
+footer img{width:40px;filter:invert(1) sepia(1) saturate(4) hue-rotate(5deg) brightness(2.2) drop-shadow(0 0 10px rgba(255,160,60,.8)) drop-shadow(0 0 24px rgba(255,120,30,.5));}
+footer .fc{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.2em;color:#4a3018;text-transform:uppercase;}
+footer .fl{display:flex;gap:18px;}
+footer .fl a{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.18em;color:#5a4020;text-transform:uppercase;text-decoration:none;transition:color .2s;}
+footer .fl a:hover{color:#c8963a;}
+@media(max-width:700px){footer{flex-direction:column;gap:20px;padding:36px 24px;text-align:center;}footer .fl{flex-wrap:wrap;justify-content:center;}}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.15;}}
+
+/* ── SECTION FRAME LINE — lives in the document, scrolls with the page ── */
+#snake-svg {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  pointer-events: none;
+  z-index: 5;
+  overflow: visible;
+}
+#snake-path {
+  fill: none;
+  stroke: rgba(232, 184, 96, 0.7);
+  stroke-width: 2.5px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+body { position: relative; }
+
+/* ── OUTRO SECTION (final "il posto" handwritten signature) ── */
+#outro {
+  position: relative;
+  height: 220px;
+  width: 100%;
+  background: #080503;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* The real Pinyon Script SVG sits inside outro, perfectly centered */
+#outro-svg {
+  position: relative;
+  display: block;
+  overflow: visible;
+  pointer-events: none;
+  width: 88vw;
+  max-width: 720px;
+  height: auto;
+}
+.outro-letter {
+  fill: none;
+  stroke: rgba(232,184,96,0.85);
+  stroke-width: 2px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: url(#snake-glow);
+}
+
+/* ── FOOTER ── */
+footer{background:#030201;padding:48px 80px 56px;display:flex;flex-direction:column;align-items:center;gap:18px;border-top:1px solid rgba(200,150,58,.07);}
+footer img{
+  width:52px;
+  filter: invert(1) sepia(1) saturate(5) hue-rotate(5deg) brightness(2.4) drop-shadow(0 0 12px rgba(255,160,50,0.9)) drop-shadow(0 0 32px rgba(255,110,20,0.5));
+}
+footer .fc{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.22em;color:#3a2810;text-transform:uppercase;}
+footer .fl{display:flex;gap:22px;}
+footer .fl a{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.18em;color:#5a4020;text-transform:uppercase;text-decoration:none;transition:color .2s;}
+footer .fl a:hover{color:#c8963a;}
+@media(max-width:700px){footer{padding:36px 24px 48px;}footer .fl{flex-wrap:wrap;justify-content:center;}}
+</style>
+</head>
+<body>
+
+<!-- FRAME LINE — drawn in document flow, scrolls with content -->
+<svg id="snake-svg" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+  <defs>
+    <filter id="snake-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur1"/>
+      <feGaussianBlur in="SourceGraphic" stdDeviation="9" result="blur2"/>
+      <feMerge>
+        <feMergeNode in="blur2"/>
+        <feMergeNode in="blur1"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <path id="snake-path" d="" filter="url(#snake-glow)"/>
+</svg>
+
+<nav id="nav">
+  <img class="nav-logo" src="data:image/png;base64,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" alt="Il Posto">
+  <div class="hamburger" onclick="document.getElementById('drw').classList.toggle('open')"><span></span><span></span><span></span></div>
+</nav>
+<div class="drawer" id="drw">
+  <button class="cx" onclick="document.getElementById('drw').classList.remove('open')">✕ Close</button>
+  <div class="db">Il Posto</div>
+  <a href="#about" onclick="document.getElementById('drw').classList.remove('open')">About</a>
+  <a href="#menu" onclick="document.getElementById('drw').classList.remove('open')">Menu</a>
+  <a href="#gallery" onclick="document.getElementById('drw').classList.remove('open')">Gallery</a>
+  <a href="#find" onclick="document.getElementById('drw').classList.remove('open')">Find Us</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="bg"></div><div class="vig"></div>
+  <div class="bd">
+    <span class="il">Il</span><span class="po">Posto</span>
+    <div class="dv"></div>
+    <p class="tg">Where every hour feels like the right one.</p>
+  </div>
+  <div class="sc"><div class="bar"></div><span>Scroll</span></div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="al">
+    <img class="main" src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=900" alt="">
+    <div class="fade"></div>
+    <div class="fc fc1"><img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=400" alt=""></div>
+    <div class="fc fc2"><img src="https://images.unsplash.com/photo-1565299715199-866c917206bb?w=400" alt=""></div>
+    <div class="fc fc3"><img src="https://images.unsplash.com/photo-1608270586620-248524c67de9?w=400" alt=""></div>
+  </div>
+  <div class="ar">
+    <p class="ey reveal">Our Story</p>
+    <h2 class="reveal" style="transition-delay:.1s">A place born<br>from <em>good taste</em></h2>
+    <div class="tl">
+      <div class="ch reveal"><p class="ct">The Beginning</p><h3>A corner of Evosmos</h3><p>Empty space, one idea. Build something the neighborhood actually needed.</p></div>
+      <div class="ch reveal"><p class="ct">The Menu</p><h3>Espresso to craft beer</h3><p>Serious coffee, rotating craft taps, cocktails, and food that doesn't cut corners.</p></div>
+      <div class="ch reveal"><p class="ct">The Community</p><h3>17,000 reasons to stay</h3><p>Evosmos showed up. Every table has a story by now.</p></div>
+      <div class="ch reveal"><p class="ct">Today</p><h3>Morning to midnight</h3><p>From the first espresso to the last cocktail. Always the right time to come in.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu">
+  <div class="menu-head">
+    <p class="ey">What We Serve</p>
+    <h2>The Menu</h2>
+  </div>
+  <div class="menu-cats">
+    <button class="menu-cat-btn active" onclick="switchCat('coffee',this)">
+      <img class="cat-img" src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=200" alt="">
+      <div class="cat-label">Coffee</div>
+    </button>
+    <button class="menu-cat-btn" onclick="switchCat('beer',this)">
+      <img class="cat-img" src="https://images.unsplash.com/photo-1608270586620-248524c67de9?w=200" alt="">
+      <div class="cat-label">Craft Beer</div>
+    </button>
+    <button class="menu-cat-btn" onclick="switchCat('cocktails',this)">
+      <img class="cat-img" src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=200" alt="">
+      <div class="cat-label">Cocktails</div>
+    </button>
+    <button class="menu-cat-btn" onclick="switchCat('food',this)">
+      <img class="cat-img" src="https://images.unsplash.com/photo-1565299715199-866c917206bb?w=200" alt="">
+      <div class="cat-label">Food</div>
+    </button>
+    <button class="menu-cat-btn" onclick="switchCat('pancakes',this)">
+      <img class="cat-img" src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=200" alt="">
+      <div class="cat-label">Pancakes</div>
+    </button>
+  </div>
+
+  <div class="menu-panel active" id="cat-coffee">
+    <div class="menu-featured">
+      <img class="mf-img" src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=500" alt="">
+      <div class="mf-body">
+        <span class="mf-tag">★ Most popular</span>
+        <div class="mf-name">Freddo Espresso</div>
+        <div class="mf-desc">Our best seller. Double shot over ice, shaken to a perfect crema. The way Thessaloniki drinks coffee.</div>
+        <div class="mf-price">3.00€</div>
+      </div>
+    </div>
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Espresso</div><div class="mi-desc">Double shot, dark roast</div></div><div class="mi-price">2.50€</div></div>
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Cappuccino</div><div class="mi-desc">Steamed milk, light foam</div></div><div class="mi-price">3.50€</div></div>
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Flat White</div><div class="mi-desc">Double ristretto, microfoam</div></div><div class="mi-price">3.80€</div></div>
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Cold Brew</div><div class="mi-desc">12-hour steep</div></div><div class="mi-price">4.00€</div></div>
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Frappe</div><div class="mi-desc">Classic Greek style</div></div><div class="mi-price">3.00€</div></div>
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Freddo Cappuccino</div><div class="mi-desc">Iced, with cold foam</div></div><div class="mi-price">3.50€</div></div>
+  </div>
+
+  <div class="menu-panel" id="cat-beer">
+    <div class="menu-featured">
+      <img class="mf-img" src="https://images.unsplash.com/photo-1608270586620-248524c67de9?w=500" alt="">
+      <div class="mf-body">
+        <span class="mf-tag">★ Local favourite</span>
+        <div class="mf-name">Septem Friday's Pale Ale</div>
+        <div class="mf-desc">Greek craft brewery. Citrusy, refreshing, 5.2%. One of the best on tap — always cold, always pouring.</div>
+        <div class="mf-price">5.50€</div>
+      </div>
+    </div>
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Katsika IPA</div><div class="mi-desc">Greek craft, hoppy, 6.0%</div></div><div class="mi-price">5.50€</div></div>
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Guinness</div><div class="mi-desc">Draught, smooth, 4.2%</div></div><div class="mi-price">5.00€</div></div>
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Erdinger Weiss</div><div class="mi-desc">German wheat, 5.3%</div></div><div class="mi-price">5.00€</div></div>
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Fischer Amber</div><div class="mi-desc">French lager, 6.0%</div></div><div class="mi-price">5.00€</div></div>
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Mylos Lager</div><div class="mi-desc">Local craft, light</div></div><div class="mi-price">4.50€</div></div>
+  </div>
+
+  <div class="menu-panel" id="cat-cocktails">
+    <div class="menu-featured">
+      <img class="mf-img" src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=500" alt="">
+      <div class="mf-body">
+        <span class="mf-tag">★ Bar favourite</span>
+        <div class="mf-name">Negroni</div>
+        <div class="mf-desc">Gin, Campari, sweet vermouth. Stirred, not rushed. The drink that started many long nights at Il Posto.</div>
+        <div class="mf-price">9.00€</div>
+      </div>
+    </div>
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Old Fashioned</div><div class="mi-desc">Bourbon, bitters, sugar</div></div><div class="mi-price">10.00€</div></div>
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Aperol Spritz</div><div class="mi-desc">Aperol, prosecco, soda</div></div><div class="mi-price">8.50€</div></div>
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Mojito</div><div class="mi-desc">Rum, mint, lime, soda</div></div><div class="mi-price">9.00€</div></div>
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Whiskey Sour</div><div class="mi-desc">Bourbon, lemon, egg white</div></div><div class="mi-price">10.00€</div></div>
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Moscow Mule</div><div class="mi-desc">Vodka, ginger beer, lime</div></div><div class="mi-price">9.00€</div></div>
+  </div>
+
+  <div class="menu-panel" id="cat-food">
+    <div class="menu-featured">
+      <img class="mf-img" src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=500" alt="">
+      <div class="mf-body">
+        <span class="mf-tag">★ Must try</span>
+        <div class="mf-name">Il Posto Burger</div>
+        <div class="mf-desc">Beef patty, aged cheddar, caramelized onion, house sauce. Served with fries. The one everyone orders twice.</div>
+        <div class="mf-price">11.00€</div>
+      </div>
+    </div>
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Club Sandwich</div><div class="mi-desc">Chicken, bacon, egg, tomato</div></div><div class="mi-price">9.50€</div></div>
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Bao Buns</div><div class="mi-desc">Pulled pork, pickled cucumber</div></div><div class="mi-price">10.00€</div></div>
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Pizza Margherita</div><div class="mi-desc">San Marzano, fior di latte</div></div><div class="mi-price">10.50€</div></div>
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Πατάτες Σπιτικές</div><div class="mi-desc">Crispy, sea salt, aioli</div></div><div class="mi-price">5.00€</div></div>
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Σαλάτα Εποχής</div><div class="mi-desc">Seasonal greens, lemon dressing</div></div><div class="mi-price">6.50€</div></div>
+  </div>
+
+  <div class="menu-panel" id="cat-pancakes">
+    <div class="menu-featured">
+      <img class="mf-img" src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=500" alt="">
+      <div class="mf-body">
+        <span class="mf-tag">★ Weekend favourite</span>
+        <div class="mf-name">Pancakes Γλυκά</div>
+        <div class="mf-desc">Fluffy stack, maple syrup, fresh berries, whipped cream. The reason people stay for brunch.</div>
+        <div class="mf-price">7.50€</div>
+      </div>
+    </div>
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Pancakes Αλμυρά</div><div class="mi-desc">Bacon, egg, cream cheese</div></div><div class="mi-price">8.50€</div></div>
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Pancakes Νουτέλα</div><div class="mi-desc">Nutella, banana, crushed hazelnuts</div></div><div class="mi-price">7.50€</div></div>
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">French Toast</div><div class="mi-desc">Brioche, maple butter, powdered sugar</div></div><div class="mi-price">7.00€</div></div>
+    <div class="menu-item"><div class="mi-left"><div class="mi-name">Πλατώ Πρωινού</div><div class="mi-desc">Eggs, toast, cold cuts, cheese</div></div><div class="mi-price">9.00€</div></div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="gh">
+    <div class="gl">
+      <p class="ey reveal">The Atmosphere</p>
+      <h2 class="reveal" style="transition-delay:.1s">The kind of place<br>you stay longer<br>than you planned.</h2>
+    </div>
+    <div class="gr reveal" style="transition-delay:.2s">
+      <p>Morning coffee that wakes you up properly. Afternoon drinks that don't rush. Late nights that turn into stories.</p>
+      <p class="loc">Evosmos, Thessaloniki</p>
+    </div>
+  </div>
+  <div class="grid">
+    <div class="gi g1 tall"><div class="cap">The bar</div></div>
+    <div class="gi g2"><div class="cap">Cocktails</div></div>
+    <div class="gi g3"><div class="cap">Craft beer</div></div>
+    <div class="gi g4"><div class="cap">The kitchen</div></div>
+    <div class="gi g5"><div class="cap">The crowd</div></div>
+  </div>
+  <div class="gcta">
+    <p>"The kind of place that earns a regular."</p>
+    <a href="https://www.facebook.com/ilpostosq" target="_blank">See more on Facebook →</a>
+  </div>
+</section>
+
+<!-- FIND US -->
+<section id="find">
+  <div class="ms">
+    <div class="mp"></div><div class="mo"></div>
+    <div class="pin"><div class="dot"></div><span>Il Posto · Evosmos</span></div>
+  </div>
+  <div class="fi">
+    <p class="ey">Find Us</p>
+    <h2>Come in.<br>We're open.</h2>
+    <div class="detail"><span class="ic">Address</span><span class="vl">Evosmos, Thessaloniki, Greece</span></div>
+    <div class="detail"><span class="ic">Hours</span><span class="vl">Mon – Sun · 08:00 – 02:00</span></div>
+    <div class="detail"><span class="ic">Phone</span><span class="vl">+30 2310 000 000</span></div>
+    <div class="detail"><span class="ic">Web</span><span class="vl">il-posto.gr</span></div>
+    <div class="socials"><a href="#">Facebook</a><a href="#">Instagram</a></div>
+  </div>
+</section>
+
+<!-- OUTRO — real Pinyon Script "IL POSTO" signature, connected to snake line -->
+<section id="outro">
+  <svg id="outro-svg" viewBox="0 0 760 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+    <path class="outro-letter" id="ol-I" d="M27.734 160.156Q19.609 160.156 15.078 156.797Q10.547 153.438 10.078 148.906Q9.766 145.313 11.992 143.594Q14.219 141.875 16.641 141.641Q17.969 141.484 19.336 142.188Q20.703 142.891 20.938 144.844Q21.094 146.328 19.922 147.539Q18.750 148.750 16.953 149.063Q14.766 149.453 13.281 148.672L13.281 149.141Q13.281 152.891 17.188 155.508Q21.094 158.125 27.578 158.125Q33.594 158.125 39.648 155.703Q45.703 153.281 52.539 147.500Q59.375 141.719 67.734 131.641Q63.359 129.609 60.352 125.078Q57.344 120.547 57.344 112.500Q57.344 103.672 61.797 94.883Q66.250 86.094 74.297 78.242Q82.344 70.391 93.242 64.336Q104.141 58.281 117.148 54.766Q130.156 51.250 144.375 51.250Q146.172 51.250 147.852 51.406Q149.531 51.563 151.172 51.797Q152.969 51.875 154.648 52.109Q156.328 52.344 158.047 52.344Q160 52.344 161.953 52.070Q163.906 51.797 166.016 51.797Q168.906 51.797 168.906 52.891Q168.906 54.297 166.328 54.375Q163.359 54.531 161.055 54.492Q158.750 54.453 156.719 54.453Q154.453 55 152.813 55.586Q151.172 56.172 149.375 56.875Q137.344 62.188 124.805 74.727Q112.266 87.266 98.359 107.422Q88.906 121.016 78.594 131.484L79.219 131.484Q87.500 131.484 96.602 127.422Q105.703 123.359 113.633 116.172Q121.563 108.984 126.523 99.492Q131.484 90 131.484 79.063Q131.484 77.266 131.797 76.992Q132.109 76.719 132.344 76.719Q133.281 76.719 133.281 80.547Q133.281 91.797 128.320 101.445Q123.359 111.094 115.234 118.320Q107.109 125.547 97.422 129.609Q87.734 133.672 78.281 133.672L76.484 133.672Q63.906 145.938 51.055 153.047Q38.203 160.156 27.734 160.156M69.141 130Q72.031 126.484 75.117 122.422Q78.203 118.359 81.563 113.750Q96.484 93.203 109.453 80.664Q122.422 68.125 133.281 61.836Q144.141 55.547 152.734 53.906Q150.781 53.594 148.438 53.438Q146.094 53.281 144.531 53.281Q136.484 53.281 127.227 56.055Q117.969 58.828 108.594 63.633Q99.219 68.438 90.703 74.609Q82.188 80.781 75.508 87.656Q68.828 94.531 64.961 101.406Q61.094 108.281 61.094 114.453Q61.094 121.328 63.320 124.883Q65.547 128.438 69.141 130"/>
+    <path class="outro-letter" id="ol-L" d="M195.391 161.953Q190.078 161.953 183.438 160.781Q176.797 159.609 170.195 157.930Q163.594 156.250 158.359 154.766Q146.172 160.156 131.328 160.156Q122.500 160.156 118.320 158.125Q114.141 156.094 114.141 153.750Q114.141 150.078 118.984 147.930Q123.828 145.781 131.641 145.781Q137.500 145.781 143.633 147.188Q149.766 148.594 157.188 151.250Q163.203 147.344 169.688 140.273Q176.172 133.203 184.375 122.031Q168.203 121.484 158.359 114.961Q148.516 108.438 148.516 98.281Q148.516 91.563 152.852 85.195Q157.188 78.828 164.180 74.688Q171.172 70.547 179.219 70.547Q180.547 70.547 180.742 70.898Q180.938 71.250 180.938 71.484Q180.938 71.875 180.625 72.070Q180.313 72.266 178.438 72.422Q170.391 73.203 165.039 76.992Q159.688 80.781 157.031 86.016Q154.375 91.250 154.375 96.406Q154.375 108.438 162.969 114.023Q171.563 119.609 186.016 119.766Q188.516 116.328 191.133 112.500Q193.750 108.672 196.641 104.375Q209.688 84.922 221.055 73.086Q232.422 61.250 243.203 55.898Q253.984 50.547 265.156 50.547Q270.938 50.547 274.531 53.125Q278.125 55.703 278.125 60Q278.125 66.563 273.086 74.219Q268.047 81.875 259.492 89.453Q250.938 97.031 240.234 103.672Q229.531 110.313 218.125 114.961Q206.719 119.609 196.094 121.250Q187.578 132.656 179.219 140.508Q170.859 148.359 161.953 153.047Q168.672 155.469 176.992 156.797Q185.313 158.125 195.938 158.125Q204.688 158.125 210 156.445Q215.313 154.766 218.008 152.813Q220.703 150.859 221.484 150.078Q222.656 148.906 223.047 149.766Q223.281 150.313 222.852 151.133Q222.422 151.953 221.797 152.578Q215.469 158.281 208.828 160.117Q202.188 161.953 195.391 161.953M197.969 118.750Q208.281 116.953 218.906 112.344Q229.531 107.734 239.180 101.328Q248.828 94.922 256.445 87.656Q264.063 80.391 268.477 73.125Q272.891 65.859 272.891 59.531Q272.891 56.797 270.547 54.570Q268.203 52.344 264.688 52.344Q252.109 52.344 239.883 62.461Q227.656 72.578 216.172 91.250Q211.406 99.063 206.875 105.938Q202.344 112.813 197.969 118.750M130.234 158.281Q136.953 158.281 142.578 157.266Q148.203 156.250 153.672 153.359Q148.438 151.875 142.695 150.820Q136.953 149.766 132.266 149.766Q116.328 149.766 116.328 153.672Q116.328 154.922 120.039 156.602Q123.750 158.281 130.234 158.281"/>
+    <path class="outro-letter" id="ol-P" d="M290.078 160.156Q281.563 160.156 277.539 157.031Q273.516 153.906 273.516 149.453Q273.516 146.016 275.977 144.492Q278.438 142.969 280.859 142.969Q282.031 142.969 283.398 143.828Q284.766 144.688 284.766 146.563Q284.766 148.047 283.438 149.258Q282.109 150.469 280.313 150.469Q279.297 150.469 278.359 150.313Q277.422 150.156 276.641 149.688L276.641 150.078Q276.641 153.516 280 155.742Q283.359 157.969 289.063 157.969Q294.063 157.969 298.633 156.250Q303.203 154.531 308.711 149.688Q314.219 144.844 321.758 135.547Q329.297 126.250 340.313 111.094Q335.938 108.203 335.938 104.219Q335.938 100.703 338.984 98.438Q342.031 96.172 345.391 96.172Q346.875 96.172 347.109 96.563Q347.344 96.953 347.344 96.953Q347.344 97.422 346.406 97.578Q342.813 98.125 340.938 100.391Q339.063 102.656 339.063 105.703Q339.063 107.500 341.641 109.219L342.734 107.734Q351.250 96.250 358.867 87.578Q366.484 78.906 374.023 72.070Q381.563 65.234 389.922 59.531L393.125 57.422Q388.672 54.688 381.719 53.281Q374.766 51.875 365.234 51.875Q350.313 51.875 336.992 56.094Q323.672 60.313 313.516 67.148Q303.359 73.984 297.695 82.070Q292.031 90.156 292.266 97.891Q292.500 104.297 296.016 106.797Q299.531 109.297 302.891 109.297Q308.516 109.297 314.219 105.859Q319.922 102.422 325.117 97.031Q330.313 91.641 334.453 85.625Q338.594 79.609 341.133 74.258Q343.672 68.906 344.063 65.703Q344.297 63.047 345.156 63.047Q345.938 63.047 345.938 65.469Q346.172 72.266 343.281 80.195Q340.391 88.125 334.727 95.234Q329.063 102.344 320.938 106.875Q312.813 111.406 302.656 111.406Q298.281 111.406 294.141 107.813Q290 104.219 289.844 98.359Q289.609 90.703 293.828 83.594Q298.047 76.484 305.547 70.391Q313.047 64.297 322.773 59.766Q332.500 55.234 343.359 52.695Q354.219 50.156 365.078 50.156Q374.844 50.156 382.500 51.641Q390.156 53.125 395.781 55.859Q400.625 53.125 404.336 51.875Q408.047 50.625 409.922 50.625Q411.406 50.625 411.484 51.406Q411.484 51.875 411.133 52.188Q410.781 52.500 409.453 52.656Q404.297 53.672 398.594 57.344Q404.922 61.094 408.047 66.328Q411.172 71.563 411.172 77.656Q411.172 84.922 406.953 91.719Q402.734 98.516 395.547 103.906Q388.359 109.297 379.336 112.461Q370.313 115.625 360.703 115.625Q354.531 115.625 349.297 114.531Q336.484 131.719 325.859 141.680Q315.234 151.641 306.367 155.898Q297.500 160.156 290.078 160.156M360.391 113.594Q366.641 113.594 373.828 110.977Q381.016 108.359 387.383 103.203Q393.750 98.047 397.773 90.352Q401.797 82.656 401.797 72.578Q401.797 64.297 395.781 59.297Q387.266 65.469 377.891 76.563Q368.516 87.656 358.047 102.344Q356.172 105.078 354.375 107.617Q352.578 110.156 350.781 112.578Q355.625 113.594 360.391 113.594"/>
+    <path class="outro-letter" id="ol-O1" d="M399.219 160.156Q390.156 160.156 383.672 154.336Q377.188 148.516 377.188 136.484Q377.188 124.844 382.656 112.695Q388.125 100.547 397.539 89.453Q406.953 78.359 418.945 69.570Q430.938 60.781 444.141 55.664Q457.344 50.547 470.313 50.547Q481.250 50.547 486.367 55.195Q491.484 59.844 491.484 67.031Q491.484 69.922 490.352 73.945Q489.219 77.969 487.969 79.766Q486.484 81.641 485.938 81.641Q485.313 81.641 485.313 80.859Q485.313 80.547 486.094 79.453Q487.109 78.203 488.203 74.414Q489.297 70.625 489.297 67.188Q489.297 60.781 484.609 56.758Q479.922 52.734 469.453 52.734Q461.016 52.734 451.367 57.031Q441.719 61.328 431.992 68.633Q422.266 75.938 413.477 85.156Q404.688 94.375 397.773 104.375Q390.859 114.375 386.875 123.945Q382.891 133.516 382.891 141.484Q382.891 148.828 387.188 153.516Q391.484 158.203 400.156 158.203Q408.594 158.203 418.125 153.867Q427.656 149.531 436.836 142.148Q446.016 134.766 453.477 125.586Q460.938 116.406 465.430 106.602Q469.922 96.797 469.922 87.734Q469.922 81.016 466.367 77.813Q462.813 74.609 456.641 74.609Q449.219 74.609 441.211 78.984Q433.203 83.359 426.328 90.977Q419.453 98.594 415.156 108.398Q410.859 118.203 410.859 129.063Q410.859 132.109 411.602 136.094Q412.344 140.078 414.453 143.203Q414.609 143.438 414.805 143.867Q415 144.297 414.453 144.609Q413.906 144.844 412.656 143.203Q411.172 141.328 409.844 137.070Q408.516 132.813 408.516 128.125Q408.516 116.953 412.734 106.914Q416.953 96.875 424.023 89.102Q431.094 81.328 439.766 76.875Q448.438 72.422 457.422 72.422Q463.672 72.422 468.711 76.563Q473.750 80.703 473.750 89.766Q473.750 98.672 469.492 108.398Q465.234 118.125 457.813 127.305Q450.391 136.484 440.859 143.906Q431.328 151.328 420.625 155.742Q409.922 160.156 399.219 160.156"/>
+    <path class="outro-letter" id="ol-S" d="M479.844 160.156Q471.328 160.156 466.602 157.031Q461.875 153.906 461.875 149.453Q461.875 146.016 464.297 144.492Q466.719 142.969 469.141 142.969Q470.469 142.969 471.758 143.828Q473.047 144.688 473.047 146.563Q473.047 148.047 471.719 149.258Q470.391 150.469 468.594 150.469Q466.250 150.469 465 149.688L465 150.078Q465 153.516 468.945 155.898Q472.891 158.281 478.594 158.281Q486.953 158.281 493.672 154.102Q500.391 149.922 506.094 143.047Q511.797 136.172 516.914 127.813Q522.031 119.453 527.109 111.016L528.672 108.438Q516.328 107.969 506.602 104.727Q496.875 101.484 491.445 95.859Q486.016 90.234 486.484 82.813Q486.875 75.859 491.484 69.961Q496.094 64.063 503.789 59.727Q511.484 55.391 521.211 52.969Q530.938 50.547 541.641 50.547Q547.422 50.547 551.758 51.641Q556.094 52.734 556.094 53.828Q556.094 54.141 555.156 54.141Q554.609 54.141 554.102 54.023Q553.594 53.906 552.969 53.828Q550.469 53.203 547.852 52.773Q545.234 52.344 541.563 52.344Q532.500 52.344 523.789 54.648Q515.078 56.953 507.930 61.172Q500.781 65.391 496.445 71.250Q492.109 77.109 491.719 84.297Q491.406 88.984 495.430 93.984Q499.453 98.984 508.047 102.500Q516.641 106.016 529.922 106.484Q548.594 77.109 564.219 63.828Q579.844 50.547 593.906 50.547Q598.594 50.547 601.328 53.047Q604.063 55.547 603.828 60.234Q603.516 66.250 598.555 73.750Q593.594 81.250 585.078 88.438Q576.563 95.625 565.469 100.938Q554.375 106.250 541.641 107.891Q535 118.125 528.125 127.539Q521.250 136.953 513.789 144.297Q506.328 151.641 497.930 155.898Q489.531 160.156 479.844 160.156M543.125 105.703Q554.375 103.828 564.453 98.711Q574.531 93.594 582.344 86.797Q590.156 80 594.727 72.891Q599.297 65.781 599.609 59.922Q600 55.703 597.969 54.063Q595.938 52.422 593.828 52.500Q584.141 52.813 573.242 64.219Q562.344 75.625 548.672 97.109Q547.266 99.297 545.859 101.406Q544.453 103.516 543.125 105.703"/>
+    <path class="outro-letter" id="ol-T" d="M606.563 99.453Q600.547 99.453 597.188 96.133Q593.828 92.813 593.828 87.344Q593.828 82.109 598.242 75.977Q602.656 69.844 610.391 64.375Q618.125 58.906 628.047 55.547Q631.797 54.297 636.797 53.477Q641.797 52.656 647.070 52.266Q652.344 51.875 656.641 51.875Q662.500 51.875 668.555 52.617Q674.609 53.359 678.203 54.141Q682.578 54.922 687.500 55.313Q692.422 55.703 694.688 55.703Q700.469 55.703 706.094 53.750Q711.719 51.797 716.172 48.672Q720.625 45.547 722.813 42.109Q723.359 41.172 723.711 40.977Q724.063 40.781 724.297 40.781Q725.156 40.781 725.156 41.563Q725.156 42.656 722.578 45.938Q718.672 50.547 711.992 54.180Q705.313 57.813 697.031 59.922Q688.750 62.031 680 62.031Q676.172 62.031 671.328 61.445Q666.484 60.859 659.063 59.297Q652.656 58.047 647.266 57.500Q641.875 56.953 638.203 56.953Q631.172 56.953 623.789 59.844Q616.406 62.734 610.117 67.383Q603.828 72.031 599.922 77.422Q596.016 82.813 596.016 87.891Q596.016 91.563 598.438 94.258Q600.859 96.953 605.781 96.953Q610.234 96.953 615.625 93.398Q621.016 89.844 626.094 84.570Q631.172 79.297 634.766 73.867Q638.359 68.438 639.297 64.609Q639.609 63.203 639.805 62.930Q640 62.656 640.234 62.656Q641.094 62.656 641.094 64.609Q641.094 71.094 637.852 77.305Q634.609 83.516 629.414 88.516Q624.219 93.516 618.203 96.484Q612.188 99.453 606.563 99.453M564.375 160.156Q559.063 160.156 554.453 158.594Q549.844 157.031 546.992 154.102Q544.141 151.172 544.141 147.109Q544.141 143.594 546.602 142.070Q549.063 140.547 551.484 140.547Q552.734 140.547 554.063 141.406Q555.391 142.266 555.391 144.141Q555.391 145.625 554.102 146.836Q552.813 148.047 551.016 148.047Q550 148.047 549.023 147.891Q548.047 147.734 547.266 147.266L547.266 147.734Q547.266 152.969 552.383 155.469Q557.500 157.969 565 157.969Q576.797 157.969 589.570 149.336Q602.344 140.703 613.516 123.125Q616.953 117.813 621.328 112.188Q625.703 106.563 630.938 100.391Q639.922 90.078 647.930 82.656Q655.938 75.234 661.563 71.250Q667.188 67.266 668.750 67.266Q669.844 67.266 669.844 67.969Q669.844 68.828 668.281 69.766Q664.141 72.500 661.211 74.844Q658.281 77.188 655.469 80.508Q652.656 83.828 648.984 89.180Q645.313 94.531 639.688 103.281Q626.094 124.297 613.125 136.797Q600.156 149.297 587.930 154.727Q575.703 160.156 564.375 160.156"/>
+    <path class="outro-letter" id="ol-O2" d="M657.188 160.156Q648.125 160.156 641.641 154.336Q635.156 148.516 635.156 136.484Q635.156 124.844 640.625 112.695Q646.094 100.547 655.508 89.453Q664.922 78.359 676.914 69.570Q688.906 60.781 702.109 55.664Q715.313 50.547 728.281 50.547Q739.219 50.547 744.336 55.195Q749.453 59.844 749.453 67.031Q749.453 69.922 748.320 73.945Q747.188 77.969 745.938 79.766Q744.453 81.641 743.906 81.641Q743.281 81.641 743.281 80.859Q743.281 80.547 744.063 79.453Q745.078 78.203 746.172 74.414Q747.266 70.625 747.266 67.188Q747.266 60.781 742.578 56.758Q737.891 52.734 727.422 52.734Q718.984 52.734 709.336 57.031Q699.688 61.328 689.961 68.633Q680.234 75.938 671.445 85.156Q662.656 94.375 655.742 104.375Q648.828 114.375 644.844 123.945Q640.859 133.516 640.859 141.484Q640.859 148.828 645.156 153.516Q649.453 158.203 658.125 158.203Q666.563 158.203 676.094 153.867Q685.625 149.531 694.805 142.148Q703.984 134.766 711.445 125.586Q718.906 116.406 723.398 106.602Q727.891 96.797 727.891 87.734Q727.891 81.016 724.336 77.813Q720.781 74.609 714.609 74.609Q707.188 74.609 699.180 78.984Q691.172 83.359 684.297 90.977Q677.422 98.594 673.125 108.398Q668.828 118.203 668.828 129.063Q668.828 132.109 669.570 136.094Q670.313 140.078 672.422 143.203Q672.578 143.438 672.773 143.867Q672.969 144.297 672.422 144.609Q671.875 144.844 670.625 143.203Q669.141 141.328 667.813 137.070Q666.484 132.813 666.484 128.125Q666.484 116.953 670.703 106.914Q674.922 96.875 681.992 89.102Q689.063 81.328 697.734 76.875Q706.406 72.422 715.391 72.422Q721.641 72.422 726.680 76.563Q731.719 80.703 731.719 89.766Q731.719 98.672 727.461 108.398Q723.203 118.125 715.781 127.305Q708.359 136.484 698.828 143.906Q689.297 151.328 678.594 155.742Q667.891 160.156 657.188 160.156"/>
+  </svg>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <img src="data:image/png;base64,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" alt="Il Posto">
+  <span class="fc">© 2025 Il Posto Sq. · Evosmos, Thessaloniki</span>
+  <div class="fl"><a href="#hero">Top</a><a href="#menu">Menu</a><a href="#find">Find Us</a></div>
+</footer>
+
+<script>
+  /* ── PERFORMANCE: detect reduced-motion & low-end device ── */
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* Heuristic: if devicePixelRatio <= 1 and screen width < 768 assume older/slower device */
+  const isLowEnd = window.devicePixelRatio <= 1 && window.innerWidth < 768;
+  /* On low-end or reduced-motion, skip heavy parallax */
+  const enableParallax = !prefersReducedMotion && !isLowEnd;
+
+  /* ── PARALLAX + REVEAL ── */
+  const nav = document.getElementById('nav');
+  const fc1 = document.querySelector('.fc1');
+  const fc2 = document.querySelector('.fc2');
+  const fc3 = document.querySelector('.fc3');
+  const aboutSection = document.getElementById('about');
+  const heroBg = document.querySelector('#hero .bg');
+  const reveals = document.querySelectorAll('.reveal, .reveal-left');
+
+  /* ── SECTION FRAME LINE ──
+     One continuous SVG path embedded in the document (scrolls with content).
+     Path snakes around sections, alternating left/right side each section.
+     No animation — the line just lives on the page. */
+  const snakeSvg  = document.getElementById('snake-svg');
+  const snakePath = document.getElementById('snake-path');
+  const frameSections = ['about','menu','gallery','find'];
+
+  function buildSnake() {
+    const W = document.documentElement.clientWidth;
+    const docH = document.documentElement.scrollHeight;
+    snakeSvg.setAttribute('viewBox', `0 0 ${W} ${docH}`);
+    snakeSvg.style.height = docH + 'px';
+
+    const m = 16;              /* margin from screen edge */
+    const xR = W - m;
+    const xL = m;
+    const padY = 40;           /* vertical padding inside each section */
+
+    /*  Zigzag pattern, exactly as specified:
+        about    → vertical down LEFT,  preceded by horizontal RIGHT→LEFT across its top
+        menu     → vertical down RIGHT, preceded by horizontal LEFT→RIGHT across its top
+        gallery  → vertical down LEFT,  preceded by horizontal RIGHT→LEFT across its top
+        find     → vertical down RIGHT, preceded by horizontal LEFT→RIGHT across its top   */
+    const verticalSides = ['L', 'R', 'L', 'R'];
+
+    let d = '';
+    let lastFindBot = 0;
+
+    frameSections.forEach((id, i) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const yTop = el.offsetTop + padY;
+      const yBot = el.offsetTop + el.offsetHeight - padY;
+
+      const thisSide  = verticalSides[i];
+      const thisX     = (thisSide === 'L') ? xL : xR;
+      const startX    = (thisSide === 'L') ? xR : xL;
+
+      if (i === 0) {
+        d += `M ${startX} ${yTop} `;
+      } else {
+        const prevSide = verticalSides[i - 1];
+        const prevX    = (prevSide === 'L') ? xL : xR;
+        d += `L ${prevX} ${yTop} `;
+      }
+      d += `L ${thisX} ${yTop} `;
+      d += `L ${thisX} ${yBot} `;
+
+      if (id === 'find') lastFindBot = yBot;
+    });
+
+    /* ── Connector from end of FIND (right side) into the OUTRO ──
+       Sweep across bottom of find to left, then down and hook into center
+       where the real Pinyon Script outro SVG begins. The outro SVG letters
+       are animated separately by outroLetterReveal(). */
+    const outroEl = document.getElementById('outro');
+    if (outroEl) {
+      const outroTop = outroEl.offsetTop;
+      const outroH   = outroEl.offsetHeight;
+
+      /* horizontal across the bottom of find — right → left */
+      d += `L ${xL} ${lastFindBot} `;
+      /* vertical down on left edge into outro area */
+      d += `L ${xL} ${outroTop + outroH * 0.28} `;
+      /* sweeping curve across toward center — the "entry" into the script */
+      /* This endpoint (W*0.5 - scriptHalfW, outroTop+outroH*0.55) 
+         matches where the outro SVG's first letter (I) begins on screen */
+      const scriptW    = Math.min(W * 0.82, 700);
+      const scriptOffX = (W - scriptW) / 2;
+      const scriptMidY = outroTop + outroH * 0.52;
+      d += `C ${xL + W * 0.18} ${outroTop + outroH * 0.55}, ${scriptOffX - 20} ${scriptMidY + 10}, ${scriptOffX} ${scriptMidY} `;
+    }
+
+    snakePath.setAttribute('d', d.trim());
+    pathLength = snakePath.getTotalLength();
+    snakePath.style.strokeDasharray = pathLength;
+    snakePath.style.strokeDashoffset = pathLength;
+  }
+
+  /* ── Progressive reveal via strokeDashoffset ──
+     We compute the arc-length along the path corresponding to the "current threshold Y"
+     (= scrollY + viewportHeight/2). Then we set dashoffset so only that much of the path
+     is drawn. Because the dash walks the actual path, horizontal segments fade in
+     progressively (over their full width) instead of popping in. */
+  let pathLength = 0;
+  let cachedSamples = [];   /* array of {len, y} pairs along the path */
+
+  function sampleSnake() {
+    if (!pathLength) return;
+    cachedSamples = [];
+    const step = 8; /* px along path */
+    for (let l = 0; l <= pathLength; l += step) {
+      const p = snakePath.getPointAtLength(l);
+      cachedSamples.push({ len: l, y: p.y });
+    }
+    cachedSamples.push({ len: pathLength, y: snakePath.getPointAtLength(pathLength).y });
+  }
+
+  /* Find the arc-length on the path at which we first reach Y = thresholdY,
+     measured along the path in path order. For points after that, we return the
+     length of the latest run where path Y stays close to or below threshold. */
+  function lengthAtThresholdY(thresholdY) {
+    if (!cachedSamples.length) return 0;
+    let bestLen = 0;
+    for (let i = 0; i < cachedSamples.length; i++) {
+      if (cachedSamples[i].y <= thresholdY) bestLen = cachedSamples[i].len;
+    }
+    return bestLen;
+  }
+
+  /* ─────────────────────────────────────────────────────────────
+     UNIFIED SCROLL ANIMATION SYSTEM
+     ─────────────────────────────────────────────────────────────
+     One rAF loop. One source of truth: window.scrollY.
+     - Snake line draws progressively as user scrolls.
+     - Letters START drawing only AFTER snake target = pathLength.
+     - All visual state derives from scroll position directly — no
+       independent timers, no separate animation states.
+     - Smoothing is frame-rate independent so fast scrolls still look fluid. */
+
+  let targetReveal     = 0;   /* desired snake reveal length, set by scroll */
+  let currentReveal    = 0;   /* smoothed snake reveal (lerp) */
+  let outroAnchorLen   = 0;   /* path arc-length at the start of outro section */
+  let letterTargets    = [];  /* desired dashoffset for each letter */
+  let letterCurrents   = [];  /* smoothed dashoffset for each letter */
+
+  /* Outro letter setup */
+  const outroLetterIds = ['ol-I','ol-L','ol-P','ol-O1','ol-S','ol-T','ol-O2'];
+  let outroLetterLens  = {};
+  let outroLettersReady = false;
+
+  function initOutroLetters() {
+    outroLetterIds.forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const len = el.getTotalLength();
+      outroLetterLens[id] = len;
+      el.style.strokeDasharray = len;
+      /* Preserve current dashoffset on rebuild if already animating */
+      if (!outroLettersReady) el.style.strokeDashoffset = len;
+    });
+    if (letterTargets.length !== outroLetterIds.length) {
+      letterTargets  = outroLetterIds.map(id => outroLetterLens[id] || 0);
+      letterCurrents = letterTargets.slice();
+    }
+    outroLettersReady = true;
+  }
+
+  function findOutroAnchorLen() {
+    const outroEl = document.getElementById('outro');
+    if (!outroEl || !cachedSamples.length) return 0;
+    const outroTop = outroEl.offsetTop;
+    for (let i = 0; i < cachedSamples.length; i++) {
+      if (cachedSamples[i].y >= outroTop + outroEl.offsetHeight * 0.18) {
+        return cachedSamples[i].len;
+      }
+    }
+    return pathLength * 0.9;
+  }
+
+  /* Snake target from scroll position. */
+  function computeSnakeTarget() {
+    const sy   = window.scrollY;
+    const vh   = window.innerHeight;
+    const docH = document.documentElement.scrollHeight - vh;
+    const outroEl = document.getElementById('outro');
+
+    const thresholdY = sy + vh * 0.5;
+    let target = lengthAtThresholdY(thresholdY);
+
+    if (outroEl && outroAnchorLen > 0) {
+      const outroTop = outroEl.offsetTop;
+      if (sy + vh < outroTop - vh * 0.2) {
+        target = Math.min(target, outroAnchorLen * 0.98);
+      }
+    }
+
+    /* In outro zone, split scroll: first half finishes snake, second half draws letters. */
+    if (outroEl) {
+      const outroTop  = outroEl.offsetTop;
+      const outroH    = outroEl.offsetHeight;
+      const zoneStart = outroTop - vh + outroH * 0.2;
+      const zoneEnd   = docH;
+      const snakeEnd  = zoneStart + (zoneEnd - zoneStart) * 0.5;
+      if (sy > zoneStart) {
+        const t = Math.min(1, Math.max(0, (sy - zoneStart) / Math.max(1, snakeEnd - zoneStart)));
+        const eased = 1 - Math.pow(1 - t, 2);
+        const accelTarget = outroAnchorLen + (pathLength - outroAnchorLen) * eased;
+        target = Math.max(target, accelTarget);
+      }
+    }
+
+    return Math.min(target, pathLength);
+  }
+
+  /* Per-letter dashoffset targets. Letters stay hidden until snake target = full length. */
+  function computeLetterTargets() {
+    const n = outroLetterIds.length;
+    const targets = new Array(n);
+    for (let i = 0; i < n; i++) {
+      targets[i] = outroLetterLens[outroLetterIds[i]] || 0;
+    }
+    if (!pathLength || targetReveal < pathLength - 0.5) return targets;
+
+    const sy   = window.scrollY;
+    const vh   = window.innerHeight;
+    const docH = document.documentElement.scrollHeight - vh;
+    const outroEl = document.getElementById('outro');
+    if (!outroEl) return targets;
+
+    const outroTop  = outroEl.offsetTop;
+    const outroH    = outroEl.offsetHeight;
+    const zoneStart = outroTop - vh + outroH * 0.2;
+    const zoneEnd   = docH;
+    const letterStart = zoneStart + (zoneEnd - zoneStart) * 0.5;
+    const letterEnd   = zoneEnd;
+
+    if (sy <= letterStart) return targets;
+
+    const overall = Math.min(1, Math.max(0, (sy - letterStart) / Math.max(1, letterEnd - letterStart)));
+    const eOverall = overall < 0.5 ? 2*overall*overall : -1+(4-2*overall)*overall;
+
+    for (let i = 0; i < n; i++) {
+      const len = outroLetterLens[outroLetterIds[i]] || 0;
+      if (!len) { targets[i] = 0; continue; }
+      const start = i / n;
+      const end   = (i + 1) / n;
+      const local = Math.min(1, Math.max(0, (eOverall - start) / (end - start)));
+      const eLocal = local < 0.5 ? 2*local*local : -1+(4-2*local)*local;
+      targets[i] = len * (1 - eLocal);
+    }
+    return targets;
+  }
+
+  /* Single rAF loop, frame-rate independent smoothing.
+     PERF: stops ticking when values have converged (idle detection). */
+  let lastFrameTime = performance.now();
+  let rafId = null;
+  let tickRunning = false;
+
+  function isIdle() {
+    const snapTolerance = 0.5;
+    if (Math.abs(targetReveal - currentReveal) > snapTolerance) return false;
+    if (outroLettersReady) {
+      for (let i = 0; i < outroLetterIds.length; i++) {
+        const diff = Math.abs((letterTargets[i] || 0) - (letterCurrents[i] || 0));
+        if (diff > snapTolerance) return false;
+      }
+    }
+    return true;
+  }
+
+  function tick(now) {
+    const dt = Math.max(1, Math.min(64, now - lastFrameTime));
+    lastFrameTime = now;
+    const tau = 120;             /* ms time constant — ~equivalent to old lerp(0.18) @ 60fps */
+    const k   = 1 - Math.exp(-dt / tau);
+
+    targetReveal = computeSnakeTarget();
+    const lt = computeLetterTargets();
+    if (letterTargets.length !== lt.length) {
+      letterTargets  = lt.slice();
+      letterCurrents = lt.slice();
+    } else {
+      letterTargets = lt;
+    }
+
+    currentReveal += (targetReveal - currentReveal) * k;
+    if (snakePath && pathLength) {
+      snakePath.style.strokeDashoffset = Math.max(0, pathLength - currentReveal);
+    }
+
+    if (outroLettersReady) {
+      for (let i = 0; i < outroLetterIds.length; i++) {
+        const id  = outroLetterIds[i];
+        const el  = document.getElementById(id);
+        const len = outroLetterLens[id];
+        if (!el || !len) continue;
+        if (letterCurrents[i] === undefined) letterCurrents[i] = len;
+        letterCurrents[i] += (letterTargets[i] - letterCurrents[i]) * k;
+        el.style.strokeDashoffset = letterCurrents[i];
+      }
+    }
+
+    /* Stop rAF when converged — restarts on next scroll event */
+    if (isIdle()) {
+      tickRunning = false;
+      rafId = null;
+      return;
+    }
+    rafId = requestAnimationFrame(tick);
+  }
+
+  function startTick() {
+    if (tickRunning) return;
+    tickRunning = true;
+    lastFrameTime = performance.now();
+    rafId = requestAnimationFrame(tick);
+  }
+
+  /* PERF: schedule scroll work in rAF to avoid layout thrashing.
+     Batch all DOM reads first, then writes. */
+  let scrollScheduled = false;
+  let lastScrollY = -1;
+
+  function applyScroll() {
+    scrollScheduled = false;
+    const sy = window.scrollY;
+    /* Skip if scroll position hasn't meaningfully changed */
+    if (Math.abs(sy - lastScrollY) < 1) return;
+    lastScrollY = sy;
+
+    /* ── Batch reads ── */
+    const isScrolled = sy > 60;
+    let sectionTop = 0, p = 0;
+    if (enableParallax && aboutSection && fc1 && fc2 && fc3) {
+      sectionTop = aboutSection.getBoundingClientRect().top + sy;
+      p = sy - sectionTop + window.innerHeight;
+    }
+    const revealThreshold = window.innerHeight * 0.88;
+    const revealVisible = Array.from(reveals).map(el => ({
+      el,
+      visible: el.getBoundingClientRect().top < revealThreshold
+    }));
+
+    /* ── Batch writes ── */
+    nav.classList.toggle('scrolled', isScrolled);
+
+    if (enableParallax) {
+      if (heroBg) heroBg.style.transform = `translateY(${sy * 0.25}px)`;
+      if (aboutSection && fc1 && fc2 && fc3) {
+        fc1.style.transform = `rotate(4deg) translateY(${p * -0.06}px) translateX(${p * 0.01}px)`;
+        fc2.style.transform = `rotate(-6deg) translateY(${p * 0.04}px) translateX(${p * -0.015}px)`;
+        fc3.style.transform = `rotate(9deg) translateY(${p * -0.03}px)`;
+      }
+    }
+
+    revealVisible.forEach(({ el, visible }) => {
+      if (visible) el.classList.add('visible');
+    });
+
+    /* Wake up the rAF tick to re-animate snake/letters */
+    startTick();
+  }
+
+  function onScroll() {
+    if (!scrollScheduled) {
+      scrollScheduled = true;
+      requestAnimationFrame(applyScroll);
+    }
+  }
+
+  function switchCat(id, btn) {
+    document.querySelectorAll('.menu-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.menu-cat-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('cat-' + id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  function rebuildAndSample() {
+    buildSnake();
+    sampleSnake();
+    outroAnchorLen = findOutroAnchorLen();
+  }
+
+  /* ── Scroll resistance during outro animation ── */
+  function inResistanceZone() {
+    const sy   = window.scrollY;
+    const vh   = window.innerHeight;
+    const docH = document.documentElement.scrollHeight - vh;
+    const outroEl = document.getElementById('outro');
+    if (!outroEl || docH <= 0) return 0;
+    const startSY = outroEl.offsetTop - vh + outroEl.offsetHeight * 0.1;
+    if (sy < startSY) return 0;
+    const t = Math.min(1, Math.max(0, (sy - startSY) / Math.max(1, docH - startSY)));
+    return t;
+  }
+
+  window.addEventListener('wheel', (e) => {
+    const t = inResistanceZone();
+    if (t <= 0) return;
+    if (e.deltaY <= 0) return;
+    const sy   = window.scrollY;
+    const docH = document.documentElement.scrollHeight - window.innerHeight;
+    if (sy >= docH) return;
+    e.preventDefault();
+    const factor = 1 / (1 + 5 * t);
+    window.scrollBy({ top: e.deltaY * factor, behavior: 'instant' });
+  }, { passive: false });
+
+  let touchLastY = null;
+  window.addEventListener('touchstart', (e) => {
+    if (e.touches.length === 1) touchLastY = e.touches[0].clientY;
+  }, { passive: true });
+
+  window.addEventListener('touchmove', (e) => {
+    if (touchLastY === null || e.touches.length !== 1) return;
+    const t = inResistanceZone();
+    if (t <= 0) { touchLastY = e.touches[0].clientY; return; }
+    const currentY = e.touches[0].clientY;
+    const dy = touchLastY - currentY;
+    if (dy <= 0) { touchLastY = currentY; return; }
+    const sy   = window.scrollY;
+    const docH = document.documentElement.scrollHeight - window.innerHeight;
+    if (sy >= docH) { touchLastY = currentY; return; }
+    e.preventDefault();
+    const factor = 1 / (1 + 5 * t);
+    window.scrollBy({ top: dy * factor, behavior: 'instant' });
+    touchLastY = currentY;
+  }, { passive: false });
+
+  window.addEventListener('touchend', () => { touchLastY = null; }, { passive: true });
+
+  /* ── Bootstrap ── */
+  window.addEventListener('scroll', onScroll, {passive:true});
+
+  /* PERF: debounce resize — snake rebuild is expensive */
+  let resizeTimer = null;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      rebuildAndSample();
+      initOutroLetters();
+      onScroll();
+      startTick();
+    }, 150);
+  }, {passive:true});
+
+  window.addEventListener('load', () => { rebuildAndSample(); initOutroLetters(); onScroll(); startTick(); });
+  setTimeout(() => { rebuildAndSample(); initOutroLetters(); startTick(); }, 200);
+  setTimeout(() => { rebuildAndSample(); initOutroLetters(); startTick(); }, 800);
+  rebuildAndSample();
+  initOutroLetters();
+  onScroll();
+  startTick();
+</script>
+</body>
+</html>
